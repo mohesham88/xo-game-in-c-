@@ -1,0 +1,88 @@
+@@ -0,0 +1,87 @@
+#include<iostream>
+using namespace std;
+
+char Matrix[3][3] = {'1','2','3','4','5','6','7','8','9'};
+void print_matrix(){
+    system("cls");
+    for(int i =0; i <3;i++){
+        for (int j = 0; j < 3; j++)
+        {
+            cout << Matrix[i][j]<< "  ";
+        }
+        cout << endl;
+    }
+    
+}
+char player = 'x';
+void play(){
+    char pos;
+    cout << "choose ur position - player (" << player << ") : " ;
+    cin >> pos;
+     for(int i =0; i <3;i++){
+        for (int j = 0; j < 3; j++)
+        {
+            if( Matrix[i][j] == pos){
+                Matrix[i][j] = player;
+            }
+        }
+        
+    }
+    // switch player
+    if (player == 'x'){
+        player = 'o';
+    }else{
+        player = 'x';
+    }
+}
+
+char winner(){
+    int xc = 0,oc = 0;
+    int num_counter = 0;
+    // horizontal
+    for(int i =0; i <3;i++){
+        for (int j = 0; j < 3; j++)
+        {
+            if (Matrix[i][j] == 'x' || Matrix[i][j] == 'o')num_counter++;
+           if (Matrix[i][j] == 'x') xc++;
+           else if(Matrix[i][j] == 'o')oc++;
+           if(xc == 3 || oc == 3)
+                return xc > oc ? 'x':'o';
+
+        }
+        xc = 0,oc = 0;
+    }
+    // veerticall
+    for(int i =0; i <3;i++){
+        for (int j = 0; j < 3; j++)
+        {
+           if (Matrix[j][i] == 'x') xc++;
+           else if(Matrix[j][i] == 'o')oc++;
+           if(xc == 3 || oc == 3)
+                return xc > oc ? 'x':'o';
+
+        }
+        xc = 0,oc = 0;
+    }
+    if (Matrix[0][0] =='x' && Matrix[1][1] =='x' &&Matrix[2][2] == 'x') return 'x'; 
+    else if (Matrix[0][0] =='o' && Matrix[1][1] =='o' &&Matrix[2][2] == 'o') return 'o'; 
+    else if (Matrix[0][2] =='x' && Matrix[1][1] =='x' &&Matrix[2][0] == 'x') return 'ْx'; 
+    else if (Matrix[0][2] =='o' && Matrix[1][1] =='o' &&Matrix[2][0] == 'o') return 'o'; 
+    if(num_counter == 9)return 'Z';
+    return '.';
+}
+
+int main(){
+    while (winner() == '.')
+    {
+        print_matrix();
+        play();
+    }
+    print_matrix();
+    if (winner() == 'x' || winner() =='o'){
+        cout << "the winner is " << winner();
+    }else{
+        cout << "its a Draw";
+    }
+    return 0;
+}
